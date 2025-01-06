@@ -4,7 +4,6 @@ from groq import Groq
 import re
 from dotenv import load_dotenv
 load_dotenv()
-# sma
 client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
