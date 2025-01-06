@@ -3,7 +3,9 @@ import streamlit as st
 from groq import Groq
 import re
 from dotenv import load_dotenv
+
 load_dotenv()
+
 client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
@@ -143,3 +145,26 @@ if st.session_state.page == "questions":
         for i, (q, a) in enumerate(zip(st.session_state.questions, st.session_state.answers), 1):
             st.write(f"**Q{i}:** {q}")
             st.write(f"**Your Answer:** {a}")
+
+        if st.button("Submit All Answers"):
+            st.session_state.page = "final"
+            st.experimental_rerun()
+
+if st.session_state.page == "final":
+    st.subheader("Submission Successful 🎉")
+    st.write("Thank you for submitting your responses! Your answers have been recorded successfully.")
+    st.markdown(
+        """
+        **Note:** Please ensure that the answers you provided are original. 
+        Plagiarism checks will be conducted to verify authenticity. Avoid copy-pasting content. 😄
+        """
+    )
+
+    st.write("Here is a summary of your responses:")
+    for i, (q, a) in enumerate(zip(st.session_state.questions, st.session_state.answers), 1):
+        st.write(f"**Q{i}:** {q}")
+        st.write(f"**Your Answer:** {a}")
+
+    if st.button("Finish"):
+        st.session_state.clear()
+        st.experimental_rerun()
